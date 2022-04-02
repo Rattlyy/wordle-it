@@ -23,29 +23,6 @@
     <link rel="manifest" href="manifest.json" />
     <link href="images/parle_logo_32x32.png" rel="icon shortcut" sizes="3232" />
     <link href="images/parle_logo_192x192.png" rel="apple-touch-icon" />
-    <script>
-     function randomAnalytics() {
-      // analytics are loaded once every X times
-      const times = 20;
-
-      // pick a random number
-      var index = Math.floor(Math.random()*times);
-      console.log(index)
-
-      if (index === 0) {
-        console.log("loading analytics")
-        // Append JS file to head section.
-        var script = document.createElement('script');
-        script.defer = true
-        script.setAttribute('data-domain', 'pietroppeter.github.io/wordle-it')
-        script.src = 'https://plausible.io/js/plausible.js';
-        document.getElementsByTagName('head')[0].appendChild(script);	
-      }
-      else {
-        console.log("NOT loading analytics")
-      }
-     };
-    </script>
     <style>
       /* Global Styles & Colors */
       :root {
@@ -141,7 +118,7 @@
       }
     </style>
   </head>
-  <body onload="randomAnalytics();">
+  <body>
     <script>
       (function () {
         // Defining the hash before the main bundle allows the bundle access window.hash
@@ -151,5 +128,18 @@
     </script>
     <script src="wordle-it.js"></script>
     <game-app></game-app>
+
+    <script>
+      var btn = document.createElement("button");
+      var ele = document.querySelector("body > game-app").shadowRoot.querySelector("#game > header > div.title");
+      btn.innerHTML = "Reset";
+
+      document.querySelector("body > game-app").shadowRoot.querySelector("#game > header").insertBefore(btn, ele);
+
+      btn.onclick = function () {
+        localStorage.removeItem("gameState");
+        window.location.href = window.location.href;
+      }
+    </script>
   </body>
 </html>
